@@ -1,0 +1,21 @@
+{
+  "name": "atm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "atm",
+    "banking",
+    "money"
+  ],
+  "author": "Craig Satchell",
+  "license": "ISC",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "prompt-sync": "^4.2.0"
+  }
+}
