@@ -1,3 +1,5 @@
+"use strict";
+
 let data = {
    id: '12345678',
    holder: 'Michael Britton',
