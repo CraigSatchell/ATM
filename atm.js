@@ -1,7 +1,8 @@
 "use strict";
 
 const prompt = require("prompt-sync")();
-const { _appName, promptFor } = require('./helper');
+const { _appName, promptFor, promptPassword, appBanner, pressReturn } = require('./helper');
+
 
 
 // get account balance
@@ -16,6 +17,7 @@ function withdraw(account) {
    amt = Number(amt);
    if (amt > 0) {
       if (account.balance - amt >= 0) {
+         account.balance -= amt; // deposit monies
          console.log(`\n\t\tYou withdrew: $${amt}`);
       } else {
          console.log('\n\t\tYour request exceeds*** your available balance.')
@@ -31,6 +33,7 @@ function deposit(account) {
    let amt = promptFor("Enter Deposit $ ");
    amt = Number(amt);
    if (amt > 0) {
+      account.balance += amt; // deposit monies
       console.log(`\n\t\tYou deposited: $${amt}`);
    } else {
       console.log('\n\t\tYour entry was invalid. Try Again.');
@@ -42,18 +45,29 @@ function deposit(account) {
 // validate ATM pin
 function validatePin(account) {
    let attempts = 0;
-   while (attempts < 3) {
-      let pin = promptPin();
-      if (pin === '') {
+   let pin = '';
+   while (attempts <= 2) {
+      console.clear();
+      appBanner(account);
+      pin = promptPin();
+
+      // console.log('pin: ', pin);
+      // pressReturn();
+
+      if (pin !== '') {
          if (pin === account.pin) { // check valid
             return true // set _signedOn = true
          } else {
-            console.log('Invalid PIN...')
+            pressReturn('Invalid PIN...Try again.');
          }
+
+         // console.log('pin: ', pin, 'account pin: ', account.pin);
+         // pressReturn;
+
       }
       attempts++;
    }
-   console.log('\n\t\tToo many attempts...');
+   console.log('\n\t\tToo many bad attempts...Good Bye!\n\n');
    return false; // set _signedOn = false
 }
 
@@ -61,11 +75,12 @@ function validatePin(account) {
 // prompt user for pin
 function promptPin() {
    console.log('\n');
-   return promptPassword('\t\tPIN: ');
+   return promptPassword('\tPIN: ');
 }
 
-function exitATM() {
-   console.log(`\n\t\tThanks for choosing ${_appName}...\n\n`)
+function exitATM(account) {
+   const holder = account.holder.split(' ')[0];
+   console.log(`\n\t\t${holder}, Thanks for choosing ${_appName}...\n\n`)
 }
 
 

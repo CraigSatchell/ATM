@@ -7,15 +7,15 @@ var _signedOn = false;
 
 
 // wait for user to press return to continue
-function pressReturn() {
-   prompt('\n\t\tPress RETURN to continue... ');
+function pressReturn(msg='Press RETURN...') {
+   prompt(`\n\t\t${msg}`);
 }
 
 // display application banner
-function appBanner() {
-   console.log('\n\n\t\t' + '*'.repeat(35));
+function appBanner(account) {
+   console.log('\t\t' + '*'.repeat(35));
    console.log(`\t\t${_appName} - ATM`);
-   console.log('\t\t' + '*'.repeat(35) + '\n');
+   console.log('\t\t' + '*'.repeat(35));
 }
 
 // prompt for standard data entry
@@ -26,8 +26,7 @@ function promptFor(label) {
 
 // prompt for password entry
 function promptPassword(label) {
-   console.log('\n');
-   return prompt(`\t\t${label}`, '');
+   return prompt(`\t\t${label}`, { echo: '*' });
 }
 
 

@@ -1,27 +1,35 @@
 "use strict";
 
 const prompt = require("prompt-sync")();
-const {getBalance, withdraw, deposit, validatePin, promptPin, exitATM } = require('./atm')
-const { _signedOn, pressReturn, appBanner } = require('./helper');
+const { getBalance, withdraw, deposit, validatePin, promptPin, exitATM } = require('./atm')
+const { pressReturn, appBanner } = require('./helper');
+let { _signedOn } = require('./helper');
 const { data } = require('./account');
 
 
 // initialize global variables
 let _account = Object.assign(data);
 
+// console.log(data);
+// console.log(_account);
+// pressReturn();
+
 function mainMenu() {
+   if (!_signedOn) {
+      _signedOn = validatePin(_account);
+      // console.log('signed on:', _signedOn);
+   }
+
    let option = '';
-   while (option !== 'X') {
+   while (option !== 'X' && _signedOn) {
       console.clear();
-      appBanner();
-      if (_signedOn) {
+      console.log(`\n\t\tHello ${_account.holder.split(' ')[0]}!`);
+      appBanner(_account);
          console.log('\t\t1 - Check Balance');
          console.log('\t\t2 - Withdraw Cash');
          console.log('\t\t3 - Deposit Cash');
          console.log('\t\tX - Exit ATM');
-      } else {
-         _signedOn = getPin();
-      }
+
       option = prompt('\t\tChoose One: ').toUpperCase();
 
       switch (option) {
@@ -41,7 +49,7 @@ function mainMenu() {
             break;
 
          case 'X':   // exit ATM
-            exitATM();
+            exitATM(_account);
             break;
       }
    }
