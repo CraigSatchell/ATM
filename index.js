@@ -1,14 +1,16 @@
 "use strict";
 
 const prompt = require("prompt-sync")();
-const { getBalance, withdraw, deposit, validatePin, promptPin, exitATM } = require('./atm')
+const { getBalance, withdraw, deposit, validatePin, exitATM } = require('./atm')
 const { pressReturn, appBanner } = require('./helper');
-let { _signedOn } = require('./helper');
+let { _signedOn} = require('./helper');
 const { data } = require('./account');
+const { wallet } = require('./wallet');
 
 
 // initialize global variables
 let _account = Object.assign(data);
+let _wallet = Object.assign(wallet);
 
 // console.log(data);
 // console.log(_account);
@@ -34,17 +36,17 @@ function mainMenu() {
 
       switch (option) {
          case '1':   // get account balance
-            getBalance(_account);
+            getBalance(_account, _wallet);
             pressReturn();
             break;
 
          case '2':   // make cash withdrawal
-            withdraw(_account);
+            withdraw(_account, _wallet);
             pressReturn();
             break;
 
          case '3':   // make cash deposit
-            deposit(_account);
+            deposit(_account, _wallet);
             pressReturn();
             break;
 

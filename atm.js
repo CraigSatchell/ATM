@@ -1,26 +1,27 @@
 "use strict";
 
 const prompt = require("prompt-sync")();
-const { _appName, promptFor, promptPassword, appBanner, pressReturn } = require('./helper');
+const { _appName, promptFor, promptPassword, appBanner, pressReturn, message } = require('./helper');
 
 
 
 // get account balance
-function getBalance(account) {
+function getBalance(account, wallet) {
    const holder = account.holder.split(' ')[0];
-   console.log(`\n\t\t${holder}, your current balance is $${account.balance}`);
+   console.log(`\n\t\t${holder}, your current account balance is $${account.balance}. You have $${wallet.balance} left in your wallet`);
 }
 
 // make cash withdrawal
-function withdraw(account) {
+function withdraw(account, wallet) {
    let amt = promptFor("Enter Withdrawal $ ");
    amt = Number(amt);
    if (amt > 0) {
       if (account.balance - amt >= 0) {
-         account.balance -= amt; // deposit monies
+         account.balance -= amt; // withdraw monies from account
+         wallet.balance += amt;  // add monies to wallet
          console.log(`\n\t\tYou withdrew: $${amt}`);
       } else {
-         console.log('\n\t\tYour request exceeds*** your available balance.')
+         console.log('\n\t\tYour request exceeds*** your available account balance.')
       }
    } else {
       console.log('\n\t\tYour entry was invalid. Try Again.');
@@ -29,12 +30,17 @@ function withdraw(account) {
 }
 
 // deposit cash
-function deposit(account) {
+function deposit(account, wallet) {
    let amt = promptFor("Enter Deposit $ ");
    amt = Number(amt);
    if (amt > 0) {
-      account.balance += amt; // deposit monies
-      console.log(`\n\t\tYou deposited: $${amt}`);
+      if (wallet.balance - amt >= 0) {
+         wallet.balance -= amt; // take money from wallet to deposit into account
+         account.balance += amt;  // deposit monies into account
+         console.log(`\n\t\tYou deposited: $${amt}`);
+      } else {
+         console.log('\n\t\tYou do not have enough money in your wallet to make deposit.')
+      }
    } else {
       console.log('\n\t\tYour entry was invalid. Try Again.');
    }
@@ -84,7 +90,7 @@ function exitATM(account) {
 }
 
 
-// module exports
+// default exports
 module.exports.getBalance = getBalance;
 module.exports.deposit = deposit;
 module.exports.promptPin = promptPin;

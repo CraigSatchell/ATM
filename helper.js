@@ -29,11 +29,19 @@ function promptPassword(label) {
    return prompt(`\t\t${label}`, { echo: '*' });
 }
 
+// show message on console
+function message(message, secs = 3) {
+   console.log(`\n\t\t${message}`);
+   setTimeout(function () {
+   }, secs * 1000);
+}
 
-// module exports
+
+// default exports
 module.exports._appName = _appName;
 module.exports._signedOn = _signedOn;
 module.exports.pressReturn = pressReturn;
 module.exports.appBanner = appBanner;
 module.exports.promptFor = promptFor;
 module.exports.promptPassword = promptPassword;
+module.exports.message = message;
