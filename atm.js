@@ -1,8 +1,6 @@
 "use strict";
 
-const prompt = require("prompt-sync")();
-const { _appName, promptFor, promptPassword, appBanner, pressReturn, message } = require('./helper');
-
+const { _appName, promptFor, promptPassword, appBanner, pressReturn} = require('./helper');
 
 
 // get account balance
@@ -54,11 +52,9 @@ function validatePin(account) {
    let pin = '';
    while (attempts <= 2) {
       console.clear();
+      console.log('\n\n');
       appBanner(account);
       pin = promptPin();
-
-      // console.log('pin: ', pin);
-      // pressReturn();
 
       if (pin !== '') {
          if (pin === account.pin) { // check valid
@@ -66,10 +62,6 @@ function validatePin(account) {
          } else {
             pressReturn('Invalid PIN...Try again.');
          }
-
-         // console.log('pin: ', pin, 'account pin: ', account.pin);
-         // pressReturn;
-
       }
       attempts++;
    }

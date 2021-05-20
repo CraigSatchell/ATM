@@ -2,7 +2,7 @@
 
 const prompt = require("prompt-sync")();
 
-const _appName = 'TrustBANK';
+const _appName = 'FreshBANK';
 var _signedOn = false;
 
 
@@ -29,13 +29,6 @@ function promptPassword(label) {
    return prompt(`\t\t${label}`, { echo: '*' });
 }
 
-// show message on console
-function message(message, secs = 3) {
-   console.log(`\n\t\t${message}`);
-   setTimeout(function () {
-   }, secs * 1000);
-}
-
 
 // default exports
 module.exports._appName = _appName;
@@ -44,4 +37,3 @@ module.exports.pressReturn = pressReturn;
 module.exports.appBanner = appBanner;
 module.exports.promptFor = promptFor;
 module.exports.promptPassword = promptPassword;
-module.exports.message = message;
