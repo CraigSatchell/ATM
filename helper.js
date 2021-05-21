@@ -37,3 +37,12 @@ module.exports.pressReturn = pressReturn;
 module.exports.appBanner = appBanner;
 module.exports.promptFor = promptFor;
 module.exports.promptPassword = promptPassword;
+
+// module.exports = {
+//    _appName: _appName,
+//    _signOn: _signedOn,
+//    pressReturn: pressReturn,
+//    appBanner: appBanner,
+//    promptFor: promptFor,
+//    promptPassword: promptPassword
+// }
